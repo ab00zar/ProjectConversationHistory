@@ -64,3 +64,4 @@ end
 
 gem 'pry-rails'
 gem 'devise'
+gem 'tailwindcss-rails'
