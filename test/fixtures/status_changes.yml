@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  project: one
+  user: one
+  old_status: MyString
+  new_status: MyString
+
+two:
+  project: two
+  user: two
+  old_status: MyString
+  new_status: MyString
