@@ -1,3 +1,4 @@
+<h2 class="text-xl font-bold mb-2">Leave a Comment</h2>
 <%= form_with(model: @new_comment, url: project_comments_path(@project), class: "space-y-2") do |f| %>
   <div class="field">
 <%= f.label :body, 'Comment:', class: "block text-gray-700 text-sm font-bold mb-2" %>

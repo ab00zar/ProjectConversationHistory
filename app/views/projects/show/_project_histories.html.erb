@@ -1,0 +1,19 @@
+<h2 class="text-xl font-bold mb-2">Conversation History</h2>
+<div id="conversation-history" class="mb-4 space-y-2">
+  <% @project_histories.each do |history_item| %>
+    <div class="bg-white shadow rounded-md p-4">
+      <p class="text-gray-500 text-sm">
+        <strong><%= history_item.user.email %></strong> at <%= history_item.created_at.strftime('%Y-%m-%d %H:%M:%S') %>
+      </p>
+      <% if history_item.contentable_type == 'Comment' %>
+        <div class="comment mt-2">
+          <%= simple_format history_item.contentable.body %>
+        </div>
+      <% elsif history_item.contentable_type == 'StatusChange' %>
+        <div class="status-change mt-2 text-blue-600">
+          Status changed from <%= history_item.contentable&.old_status&.humanize %> to <%= history_item.contentable.new_status.humanize %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

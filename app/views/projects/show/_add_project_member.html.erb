@@ -1,0 +1,9 @@
+<h2 class="text-xl font-bold mt-4 mb-2">Add Project Member</h2>
+<%= link_to 'Add Member', new_project_project_membership_path(@project), class: "inline-block bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mb-4" %>
+
+<h2 class="text-xl font-bold mt-4 mb-2">Project Members</h2>
+<ul class="list-disc pl-5">
+  <% @project.users.each do |member| %>
+    <li><%= member.email %></li>
+  <% end %>
+</ul>
