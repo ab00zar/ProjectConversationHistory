@@ -5,26 +5,19 @@ class ProjectMembershipsController < ApplicationController
 
   def new
     @project_membership = @project.project_memberships.new
-    @available_users = User.where.not(id: @project.users.pluck(:id)) # Get users not already in the project
+    @available_users = User.where.not(id: @project.users.pluck(:id))
   end
 
   def create
-    user_ids = params[:user][:user_ids]
+    user_ids = params.dig(:user, :user_ids)
 
     if user_ids.present?
-      added_count = 0
-      user_ids.each do |user_id|
-        user = User.find_by(id: user_id)
-        if user && !@project.users.include?(user)
-          @project.project_memberships.create(user: user)
-          added_count += 1
-        end
-      end
+      result = ProjectMembershipService.add_members_to_project(@project, user_ids)
 
-      if added_count > 0
-        redirect_to @project, notice: "#{pluralize(added_count, 'member')} added to the project."
+      if result[:success]
+        redirect_to @project, notice: "#{pluralize(result[:added_count], 'member')} added to the project."
       else
-        redirect_to @project, alert: "No new members were added."
+        redirect_to @project, alert: result[:error] || "No new members were added."
       end
     else
       redirect_to @project, alert: "Please select at least one user to add."
