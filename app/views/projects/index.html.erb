@@ -1,13 +1,31 @@
-<h1>My Projects</h1>
-
-<% if @projects.any? %>
-  <ul>
-    <% @projects.each do |project| %>
-      <li><%= link_to project.name, project_path(project) %> - Status: <%= project.status.humanize %></li>
+<div class="container mx-auto p-6">
+  <div class="flex justify-end mb-4">
+    <% if user_signed_in? %>
+      <%= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: "text-blue-500 hover:underline mr-4" %>
+    <% else %>
+      <%= link_to 'Sign In', new_user_session_path, class: "text-blue-500 hover:underline mr-4" %>
+      <%= link_to 'Sign Up', new_user_registration_path, class: "text-green-500 hover:underline" %>
     <% end %>
-  </ul>
-<% else %>
-  <p>You haven't created any projects yet.</p>
-<% end %>
+  </div>
 
-<%= link_to 'New Project', new_project_path, class: 'button' %>
+  <h1 class="text-2xl font-bold mb-4">My Projects</h1>
+
+  <% if @projects.any? %>
+    <ul class="space-y-2">
+      <% @projects.each do |project| %>
+        <li class="bg-white shadow rounded-md p-4 flex items-center justify-between">
+          <div>
+            <%= link_to project.name, project_path(project), class: "text-blue-500 hover:underline font-medium" %>
+            <span class="text-gray-500 ml-2">Status: <%= project.status.humanize %></span>
+            <span class="text-gray-400 text-sm ml-2">(Created: <%= project.created_at.strftime('%Y-%m-%d') %>)</span>
+          </div>
+          <span class="text-gray-600 text-sm">Comments: <%= project.comments.count %></span>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-gray-600">You haven't created any projects yet!</p>
+  <% end %>
+
+  <%= link_to 'New Project', new_project_path, class: "inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4" %>
+</div>

@@ -1,6 +1,6 @@
 class Project < ApplicationRecord
   belongs_to :owner, class_name: 'User', foreign_key: 'owner_id'
-  has_many :project_membership, dependent: :destroy
+  has_many :project_memberships, dependent: :destroy
   has_many :users, through: :project_memberships
   has_many :comments, dependent: :destroy
   has_many :project_histories, -> { order(created_at: :desc) }, dependent: :destroy
