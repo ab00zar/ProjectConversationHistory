@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:edit, :update, :destroy]
 
   def index
     @projects = current_user.projects
@@ -21,6 +21,10 @@ class ProjectsController < ApplicationController
   end
 
   def show
+    @project = current_user.projects.find(params[:id])
+    @project_histories = @project.project_histories
+                                 .includes(:user, contentable: [:user])
+                                 .order(created_at: :desc)
     @new_comment = @project.comments.build
   end
 
